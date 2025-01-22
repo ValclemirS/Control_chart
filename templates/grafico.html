@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico - Controle de Massa Linear</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="menu">
+        <a href="/grafico">Ver Gráfico</a>
+        <a href="/input">Entrada de Dados</a>
+        <a href="/pref">Preferências</a>
+    </div>
+
+    <div class="grafico-container">
+        <h1>Gráfico de Massa Linear</h1>
+        
+        <div class="grafico-box">
+            <canvas id="massaLinearChart"></canvas>
+        </div>
+
+        <div class="informacoes-container">
+            <div class="informacoes">
+                <h3>Média de Massa Linear</h3>
+                <p class="info-value">{{ massa_media }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h3>Massa Linear Máxima</h3>
+                <p class="info-value">{{ massa_maxima }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h3>Massa Linear Mínima</h3>
+                <p class="info-value">{{ massa_minima }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h3>Massa Interna</h3>
+                <p class="info-value">{{ massa_interna }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h3>Massa Externa</h3>
+                <p class="info-value">{{ massa_externa }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h3>Massa Atual</h3>
+                <p class="info-value">{{ massa_atual }} kg/m</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='chart.js') }}"></script>
+</body>
+</html>

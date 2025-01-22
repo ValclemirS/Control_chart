@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrada de Dados - Controle de Massa Linear</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="menu">
+        <a href="/grafico">Ver Gráfico</a>
+        <a href="/pref">Preferências</a>
+    </div>
+
+    <div class="input-container">
+        <h1>Inserir Dados de Massa Linear</h1>
+        <form method="POST">
+            <label for="norma_interna">Norma Interna:</label>
+            <input type="number" step="any" name="norma_interna" id="norma_interna" value="{{ norma_interna or '' }}">
+
+            <label for="norma_externa">Norma Externa:</label>
+            <input type="number" step="any" name="norma_externa" id="norma_externa" value="{{ norma_externa or '' }}">
+
+            <label for="massa">Massa (kg):</label>
+            <input type="number" step="any" name="massa" id="massa" required>
+
+            <label for="comprimento">Comprimento (m):</label>
+            <input type="number" step="any" name="comprimento" id="comprimento" required>
+
+            <button type="submit" class="submit-btn">Enviar</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
+    </footer>
+</body>
+</html>
