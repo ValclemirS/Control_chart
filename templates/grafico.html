@@ -21,10 +21,11 @@
         </div>
 
         <div class="informacoes-container">
-            <div class="informacoes">
+            <div class="informacoes" id="massaAtual">
                 <h3> Massa Linear atual</h3>
                 <p class="info-value">{{ massa_linear }} kg/m</p>
             </div>
+            
             <div class="informacoes">
                 <h3>Média de Massa Linear</h3>
                 <p class="info-value">{{ massa_media }} kg/m</p>
@@ -70,5 +71,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='chart.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> 
 </body>
 </html>

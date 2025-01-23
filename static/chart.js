@@ -112,6 +112,18 @@ document.addEventListener("DOMContentLoaded", () => {
                             usePointStyle: true, // Altera os pontos da legenda para quadrados
                         },
                     },
+                    datalabels: {
+                        display: true,
+                        color: "black",
+                        align: "top",
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: function(value, context) {
+                            // Exibir os valores apenas para "Massa Atual"
+                            return context.dataset.label === "Massa Atual" ? value.toFixed(2) + " kg/m" : null;
+                        }
+                    }
                 },
                 scales: {
                     x: {
@@ -119,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             display: false,
                             text: "Hora",
                             font: {
-                                weight: 'bold', 
+                                weight: 'bold',
                                 size: 30        
                             }
                         },
@@ -136,6 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                 },
             },
+            plugins: [ChartDataLabels]
         });
     }
 
