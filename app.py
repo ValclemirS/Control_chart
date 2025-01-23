@@ -11,8 +11,12 @@ dados = {
 }
 
 # Variáveis globais para as preferências
-norma_interna = None
-norma_externa = None
+norma_interna_min = None
+norma_interna_max = None
+norma_externa_min = None
+norma_externa_max = None
+norma_objetivada_min = None
+norma_objetivada_max = None
 
 # Rota principal redirecionando para o gráfico
 @app.route('/')
@@ -25,53 +29,72 @@ def grafico():
     return render_template("grafico.html", 
                            massa_media=sum(dados['massa_linear'])/len(dados['massa_linear']) if dados['massa_linear'] else 0,
                            massa_maxima=max(dados['massa_linear']) if dados['massa_linear'] else 0,
-                           massa_minima=min(dados['massa_linear']) if dados['massa_linear'] else 0)
+                           massa_minima=min(dados['massa_linear']) if dados['massa_linear'] else 0,
+                           norma_interna_min=norma_interna_min,
+                           norma_interna_max=norma_interna_max,
+                           norma_externa_min=norma_externa_min,
+                           norma_externa_max=norma_externa_max,
+                           norma_objetivada_min=norma_objetivada_min,
+                           norma_objetivada_max=norma_objetivada_max)
 
 
-# Rota para a entrada de dados
+
 @app.route('/input', methods=["GET", "POST"])
 def input():
-    global norma_interna, norma_externa
     if request.method == "POST":
         try:
-            # Verificação se os campos não estão vazios
-            if not request.form['massa'] or not request.form['comprimento']:
+            massa = request.form.get('massa')
+            comprimento = request.form.get('comprimento')
+            
+            # Verificar se os campos estão vazios
+            if not massa or not comprimento:
                 return "Por favor, preencha todos os campos de massa e comprimento."
-
-            # Coletar dados do formulário
-            norma_interna = float(request.form['norma_interna']) if request.form['norma_interna'] else None
-            norma_externa = float(request.form['norma_externa']) if request.form['norma_externa'] else None
-            massa = float(request.form['massa'])  # Massa
-            comprimento = float(request.form['comprimento'])  # Comprimento
+            
+            # Converter os valores para float
+            massa = float(massa)
+            comprimento = float(comprimento)
             
             # Calcular a massa linear
             massa_linear = massa / comprimento
             
             # Capturar a hora de lançamento
-            hora_entrada = datetime.now().strftime("%H:%M:%S")  # Hora exata do lançamento
+            hora_entrada = datetime.now().strftime("%H:%M:%S")
             
-            # Adicionar dados (isso seria salvo em banco de dados em produção)
+            # Adicionar dados
             dados["hora"].append(hora_entrada)
             dados["massa_linear"].append(massa_linear)
             
             return redirect(url_for('grafico'))  # Redirecionar após o envio
         except ValueError:
             return "Por favor, insira valores válidos para todos os campos numéricos."
+    return render_template("input.html")
 
-    return render_template("input.html", norma_interna=norma_interna, norma_externa=norma_externa)
+
+
+
+
+
 
 # Rota para preferências
 @app.route('/pref', methods=["GET", "POST"])
 def pref():
-    global norma_interna, norma_externa
+    global norma_interna_min, norma_interna_max, norma_externa_min, norma_externa_max, norma_objetivada_min, norma_objetivada_max
     if request.method == "POST":
         # Atualizar as preferências
-        norma_interna = float(request.form['norma_interna']) if request.form['norma_interna'] else None
-        norma_externa = float(request.form['norma_externa']) if request.form['norma_externa'] else None
-        
+        norma_interna_min = float(request.form['norma_interna_min']) if request.form['norma_interna_min'] else None
+        norma_interna_max = float(request.form['norma_interna_max']) if request.form['norma_interna_max'] else None
+        norma_externa_min = float(request.form['norma_externa_min']) if request.form['norma_externa_min'] else None
+        norma_externa_max = float(request.form['norma_externa_max']) if request.form['norma_externa_max'] else None
+        norma_objetivada_min = float(request.form['norma_objetivada_min']) if request.form['norma_objetivada_min'] else None
+        norma_objetivada_max = float(request.form['norma_objetivada_max']) if request.form['norma_objetivada_max'] else None
         return redirect(url_for('grafico'))  # Redirecionar para o gráfico
-
-    return render_template("pref.html", norma_interna=norma_interna, norma_externa=norma_externa)
+    return render_template("pref.html", 
+                           norma_interna_min=norma_interna_min, 
+                           norma_interna_max=norma_interna_max,
+                           norma_externa_min=norma_externa_min, 
+                           norma_externa_max=norma_externa_max,
+                           norma_objetivada_min=norma_objetivada_min, 
+                           norma_objetivada_max=norma_objetivada_max)
 
 # Endpoint para dados JSON (usado pelo gráfico)
 @app.route('/data')
@@ -79,8 +102,12 @@ def data():
     return jsonify({
         "hora": dados["hora"],
         "massa_linear": dados["massa_linear"],
-        "norma_interna": norma_interna,
-        "norma_externa": norma_externa
+        "norma_interna_min": norma_interna_min,
+        "norma_interna_max": norma_interna_max,
+        "norma_externa_min": norma_externa_min,
+        "norma_externa_max": norma_externa_max,
+        "norma_objetivada_min": norma_objetivada_min,
+        "norma_objetivada_max": norma_objetivada_max
     })
 
 # Inicializar a aplicação

@@ -15,17 +15,15 @@
     <div class="input-container">
         <h1>Inserir Dados de Massa Linear</h1>
         <form method="POST">
-            <label for="norma_interna">Norma Interna:</label>
-            <input type="number" step="any" name="norma_interna" id="norma_interna" value="{{ norma_interna or '' }}">
-
-            <label for="norma_externa">Norma Externa:</label>
-            <input type="number" step="any" name="norma_externa" id="norma_externa" value="{{ norma_externa or '' }}">
-
             <label for="massa">Massa (kg):</label>
             <input type="number" step="any" name="massa" id="massa" required>
 
             <label for="comprimento">Comprimento (m):</label>
             <input type="number" step="any" name="comprimento" id="comprimento" required>
+
+            <button type="button" class="calculate-btn" onclick="calcularMassaLinear()">Calcular</button>
+
+            <p>Massa Linear (kg/m): <strong id="massa_linear_result">N/A</strong></p>
 
             <button type="submit" class="submit-btn">Enviar</button>
         </form>
@@ -34,5 +32,27 @@
     <footer>
         <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
     </footer>
+
+    <script>
+        function calcularMassaLinear() {
+            const massa = parseFloat(document.getElementById('massa').value);
+            const comprimento = parseFloat(document.getElementById('comprimento').value);
+            const resultado = massa && comprimento ? (massa / comprimento).toFixed(2) : 'N/A';
+            document.getElementById('massa_linear_result').textContent = resultado;
+        }
+    
+    function validarFormulario() {
+        const massa = parseFloat(document.getElementById('massa').value);
+        const comprimento = parseFloat(document.getElementById('comprimento').value);
+        
+        if ((isNaN(massa) || massa <= 0 ) && (isNaN(comprimento) || comprimento <= 0 )) {
+            alert("Por favor, insira valores válidos para massa e comprimento (maiores que zero).");
+            return false;  // Impede o envio do formulário
+        }
+        return true;  // Permite o envio do formulário
+    }
+
+
+    </script>
 </body>
 </html>

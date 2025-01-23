@@ -16,13 +16,33 @@
         <h1>Preferências de Normas</h1>
         <form action="/pref" method="POST">
             <div class="form-group">
-                <label for="norma_interna">Norma Interna:</label>
-                <input type="number" step="any" name="norma_interna" id="norma_interna" value="{{ norma_interna }}" required>
+                <label for="norma_interna_min">Norma Interna (Mínima):</label>
+                <input type="number" step="any" name="norma_interna_min" id="norma_interna_min" value="{{ norma_interna_min }}" required>
             </div>
 
             <div class="form-group">
-                <label for="norma_externa">Norma Externa:</label>
-                <input type="number" step="any" name="norma_externa" id="norma_externa" value="{{ norma_externa }}" required>
+                <label for="norma_interna_max">Norma Interna (Máxima):</label>
+                <input type="number" step="any" name="norma_interna_max" id="norma_interna_max" value="{{ norma_interna_max }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="norma_externa_min">Norma Externa (Mínima):</label>
+                <input type="number" step="any" name="norma_externa_min" id="norma_externa_min" value="{{ norma_externa_min }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="norma_externa_max">Norma Externa (Máxima):</label>
+                <input type="number" step="any" name="norma_externa_max" id="norma_externa_max" value="{{ norma_externa_max }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="norma_objetivada_min">Norma Objetivada (Mínima):</label>
+                <input type="number" step="any" name="norma_objetivada_min" id="norma_objetivada_min" value="{{ norma_objetivada_min }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="norma_objetivada_max">Norma Objetivada (Máxima):</label>
+                <input type="number" step="any" name="norma_objetivada_max" id="norma_objetivada_max" value="{{ norma_objetivada_max }}" required>
             </div>
 
             <button type="submit" class="submit-btn">Salvar Preferências</button>
