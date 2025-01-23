@@ -11,6 +11,7 @@ dados = {
 }
 
 # Variáveis globais para as preferências
+massa_linear = dados["massa_linear"]
 norma_interna_min = None
 norma_interna_max = None
 norma_externa_min = None
@@ -26,6 +27,7 @@ def index():
 # Rota para o gráfico
 @app.route('/grafico')
 def grafico():
+    massa_linear= dados["massa_linear"][-1] if dados["massa_linear"] else 0  # 0 se a lista estiver vazia
     return render_template("grafico.html", 
                            massa_media=sum(dados['massa_linear'])/len(dados['massa_linear']) if dados['massa_linear'] else 0,
                            massa_maxima=max(dados['massa_linear']) if dados['massa_linear'] else 0,
@@ -35,7 +37,9 @@ def grafico():
                            norma_externa_min=norma_externa_min,
                            norma_externa_max=norma_externa_max,
                            norma_objetivada_min=norma_objetivada_min,
-                           norma_objetivada_max=norma_objetivada_max)
+                           norma_objetivada_max=norma_objetivada_max,
+                           massa_linear = massa_linear
+                           )
 
 
 
