@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 labels: horas,
                 datasets: [
                     {
-                        label: "Massa Linear",
+                        label: "Massa Atual",
                         data: massaLinear,
                         borderColor: "blue",
                         backgroundColor: "rgba(0, 0, 255, 0.1)",
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
-                        label: "Norma Interna (Mínima)",
+                        label: "AVB (Mínima)",
                         data: horas.map(() => normaInternaMin),
                         borderColor: "green",
                         borderDash: [5, 5],
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
-                        label: "Norma Interna (Máxima)",
+                        label: "AVB (Máxima)",
                         data: horas.map(() => normaInternaMax),
                         borderColor: "green",
                         borderDash: [5, 5],
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
-                        label: "Norma Externa (Mínima)",
+                        label: "ABNT(Mínima)",
                         data: horas.map(() => normaExternaMin),
                         borderColor: "red",
                         borderDash: [5, 5],
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
-                        label: "Norma Externa (Máxima)",
+                        label: "ABNT (Máxima)",
                         data: horas.map(() => normaExternaMax),
                         borderColor: "red",
                         borderDash: [5, 5],
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
-                        label: "Norma Objetivada (Mínima)",
+                        label: "Massa Objetivada (Mínima)",
                         data: horas.map(() => normaObjetivadaMin),
                         borderColor: "purple",
                         borderDash: [5, 5],
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
-                        label: "Norma Objetivada (Máxima)",
+                        label: "Massa Objetivada (Máxima)",
                         data: horas.map(() => normaObjetivadaMax),
                         borderColor: "purple",
                         borderDash: [5, 5],
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 scales: {
                     x: {
                         title: {
-                            display: true,
+                            display: false,
                             text: "Hora",
                             font: {
                                 weight: 'bold', 
