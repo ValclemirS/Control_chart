@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         backgroundColor: "rgba(0, 0, 255, 0.1)",
                         borderWidth: 2,
                         fill: true,
+                        tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
                         label: "Norma Interna (Mínima)",
@@ -44,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         borderDash: [5, 5],
                         borderWidth: 1,
                         fill: false,
+                        tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
                         label: "Norma Interna (Máxima)",
@@ -52,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         borderDash: [5, 5],
                         borderWidth: 1,
                         fill: false,
+                        tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
                         label: "Norma Externa (Mínima)",
@@ -60,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         borderDash: [5, 5],
                         borderWidth: 1,
                         fill: false,
+                        tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
                         label: "Norma Externa (Máxima)",
@@ -68,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         borderDash: [5, 5],
                         borderWidth: 1,
                         fill: false,
+                        tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
                         label: "Norma Objetivada (Mínima)",
@@ -76,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         borderDash: [5, 5],
                         borderWidth: 1,
                         fill: false,
+                        tension: 0.4, // Adiciona suavização (spline)
                     },
                     {
                         label: "Norma Objetivada (Máxima)",
@@ -84,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         borderDash: [5, 5],
                         borderWidth: 1,
                         fill: false,
+                        tension: 0.4, // Adiciona suavização (spline)
                     },
                 ],
             },
