@@ -101,7 +101,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 plugins: {
                     legend: {
                         display: true,
-                        position: "top",
+                        position: "bottom", // Mover a legenda para a parte inferior
+                        labels: {
+                            usePointStyle: true, // Altera os pontos da legenda para quadrados
+                        },
                     },
                 },
                 scales: {
