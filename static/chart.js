@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 text: "Massa Linear (kg/m)",
                                 font: {
                                     weight: 'bold',
-                                    size: 30        
+                                    size: 16        
                                 }
                             },
                         },
