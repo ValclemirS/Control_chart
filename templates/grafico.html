@@ -1,76 +1,78 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico - Controle de Massa Linear</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="menu">
-        <a href="/grafico">Ver Gráfico</a>
-        <a href="/input">Entrada de Dados</a>
-        <a href="/pref">Preferências</a>
-    </div>
-
-    <div class="grafico-container">
-        <h1>Gráfico de Massa Linear</h1>
-
-        <div class="grafico-box">
-            <canvas id="massaLinearChart"></canvas>
+   <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gráfico - Controle de Massa Linear</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> <!-- Adicione esta linha -->
+    </head>
+    <body>
+        <div class="menu">
+            <a href="/grafico">Ver Gráfico</a>
+            <a href="/input">Entrada de Dados</a>
+            <a href="/pref">Preferências</a>
         </div>
-
-        <div class="informacoes-container">
-            <div class="informacoes" id="massaAtual">
-                <h3> Massa Linear atual</h3>
-                <p class="info-value">{{ massa_linear }} kg/m</p>
+    
+        <div class="grafico-container">
+            <h1>Inspeção online via leito - Massa linear</h1>
+    
+            <div class="grafico-box">
+                <canvas id="massaLinearChart"></canvas>
             </div>
-            
-            <div class="informacoes">
-                <h3>Média de Massa Linear</h3>
-                <p class="info-value">{{ massa_media }} kg/m</p>
-            </div>
-            <div class="informacoes">
-                <h3>Massa Linear Máxima</h3>
-                <p class="info-value">{{ massa_maxima }} kg/m</p>
-            </div>
-            <div class="informacoes">
-                <h3>Massa Linear Mínima</h3>
-                <p class="info-value">{{ massa_minima }} kg/m</p>
-            </div>
-            <div class="informacoes">
-                <h3>AVB (Mínima)</h3>
-                <p class="info-value">{{ norma_interna_min }} kg/m</p>
-            </div>
-            <div class="informacoes">
-                <h3>AVB (Máxima)</h3>
-                <p class="info-value">{{ norma_interna_max }} kg/m</p>
-            </div>
-            <div class="informacoes">
-                <h3>ABNT (Mínima)</h3>
-                <p class="info-value">{{ norma_externa_min }} kg/m</p>
-            </div>
-            <div class="informacoes">
-                <h3>ABNT (Máxima)</h3>
-                <p class="info-value">{{ norma_externa_max }} kg/m</p>
-            </div>
-            <div class="informacoes">
-                <h3>Massa Objetivada (Mínima)</h3>
-                <p class="info-value">{{ norma_objetivada_min }} kg/m</p>
-            </div>
-            <div class="informacoes">
-                <h3>Massa Objetivada (Máxima)</h3>
-                <p class="info-value">{{ norma_objetivada_max }} kg/m</p>
+    
+            <div class="informacoes-container">
+                <div class="informacoes" id="massaAtual">
+                    <h2> Massa Linear atual</h2>
+                    <p class="info-value">{{ massa_linear }} kg/m</p>
+                </div>
+                
+                <div class="informacoes">
+                    <h2>Média de Massa Linear</h2>
+                    <p class="info-value">{{ massa_media }} kg/m</p>
+                </div>
+                <div class="informacoes">
+                    <h2>Massa Linear Máxima</h2>
+                    <p class="info-value">{{ massa_maxima }} kg/m</p>
+                </div>
+                <div class="informacoes">
+                    <h2>Massa Linear Mínima</h2>
+                    <p class="info-value">{{ massa_minima }} kg/m</p>
+                </div>
+                <div class="informacoes">
+                    <h2>AVB (Mínima)</h2>
+                    <p class="info-value">{{ norma_interna_min }} kg/m</p>
+                </div>
+                <div class="informacoes">
+                    <h2>AVB (Máxima)</h2>
+                    <p class="info-value">{{ norma_interna_max }} kg/m</p>
+                </div>
+                <div class="informacoes">
+                    <h2>ABNT (Mínima)</h2>
+                    <p class="info-value">{{ norma_externa_min }} kg/m</p>
+                </div>
+                <div class="informacoes">
+                    <h2>ABNT (Máxima)</h2>
+                    <p class="info-value">{{ norma_externa_max }} kg/m</p>
+                </div>
+                <div class="informacoes">
+                    <h2>Massa Objetivada (Mínima)</h2>
+                    <p class="info-value">{{ norma_objetivada_min }} kg/m</p>
+                </div>
+                <div class="informacoes">
+                    <h2>Massa Objetivada (Máxima)</h2>
+                    <p class="info-value">{{ norma_objetivada_max }} kg/m</p>
+                </div>
             </div>
         </div>
-    </div>
-
-    <footer>
-        <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{ url_for('static', filename='chart.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> 
-</body>
-</html>
+    
+        <footer>
+            <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
+        </footer>
+    
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="{{ url_for('static', filename='chart.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> 
+    </body>
+    </html>
+   
