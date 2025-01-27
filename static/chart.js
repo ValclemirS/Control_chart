@@ -159,7 +159,8 @@ function updateChart(horas, massaLinear, nucleo, normaInternaMin, normaInternaMa
                     padding: {
                         top: 60,
                         left: 60,
-                        rigth: 60
+                        rigth: 60,
+                        left:50
                     },
                 },
                 devicePixelRatio: window.devicePixelRatio || 1,
@@ -184,7 +185,7 @@ function updateChart(horas, massaLinear, nucleo, normaInternaMin, normaInternaMa
                                 const index = context.dataIndex;
                                 const massa = value ? value.toFixed(2) : "N/A";
                                 const nucleoValue = nucleo && nucleo[index] !== undefined ? nucleo[index].toFixed(2) : "N/A";
-                                return `${massa} g/mm | Núc: ${nucleoValue} mm`;
+                                return `ML:${massa}g/mm\nNúc:${nucleoValue}mm`;
                             }
                             return null;
                         }
