@@ -12,45 +12,83 @@
         <a href="/input">Dados de análise</a>
     </div>
 
-    <div class="preferencias-container">
-        <h1>Normas interna e externa</h1>
-        <form action="/pref" method="POST">
-            <div class="form-group">
-                <label for="norma_interna_min">Norma Interna (Mínima):</label>
-                <input type="number" step="any" name="norma_interna_min" id="norma_interna_min" value="{{ norma_interna_min }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="norma_interna_max">Norma Interna (Máxima):</label>
-                <input type="number" step="any" name="norma_interna_max" id="norma_interna_max" value="{{ norma_interna_max }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="norma_externa_min">Norma Externa (Mínima):</label>
-                <input type="number" step="any" name="norma_externa_min" id="norma_externa_min" value="{{ norma_externa_min }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="norma_externa_max">Norma Externa (Máxima):</label>
-                <input type="number" step="any" name="norma_externa_max" id="norma_externa_max" value="{{ norma_externa_max }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="norma_objetivada_min">Norma Objetivada (Mínima):</label>
-                <input type="number" step="any" name="norma_objetivada_min" id="norma_objetivada_min" value="{{ norma_objetivada_min }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="norma_objetivada_max">Norma Objetivada (Máxima):</label>
-                <input type="number" step="any" name="norma_objetivada_max" id="norma_objetivada_max" value="{{ norma_objetivada_max }}" required>
-            </div>
-
-            <button type="submit" class="submit-btn">Salvar Preferências</button>
-        </form>
-    </div>
+    <!-- Formulário começa aqui -->
+    <form action="/pref" method="POST">
+        <div class="form-group">
+            <label for="preset">Selecione um padrão:</label>
+            <select id="preset">
+                <option value="">Selecione</option>
+                <option value="8mm">8 mm</option>
+                <!-- Você pode adicionar mais opções aqui -->
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="norma_interna_min">Norma Interna (Mínima):</label>
+            <input type="number" step="any" name="norma_interna_min" id="norma_interna_min" value="{{ norma_interna_min }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="norma_interna_max">Norma Interna (Máxima):</label>
+            <input type="number" step="any" name="norma_interna_max" id="norma_interna_max" value="{{ norma_interna_max }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="norma_externa_min">Norma Externa (Mínima):</label>
+            <input type="number" step="any" name="norma_externa_min" id="norma_externa_min" value="{{ norma_externa_min }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="norma_externa_max">Norma Externa (Máxima):</label>
+            <input type="number" step="any" name="norma_externa_max" id="norma_externa_max" value="{{ norma_externa_max }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="norma_objetivada_min">Norma Objetivada (Mínima):</label>
+            <input type="number" step="any" name="norma_objetivada_min" id="norma_objetivada_min" value="{{ norma_objetivada_min }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="norma_objetivada_max">Norma Objetivada (Máxima):</label>
+            <input type="number" step="any" name="norma_objetivada_max" id="norma_objetivada_max" value="{{ norma_objetivada_max }}" required>
+        </div>
+        
+        <button type="submit" class="submit-btn">Salvar Preferências</button>  
+    </form>
+    <!-- Formulário termina aqui -->
 
     <footer>
         <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
     </footer>
+    
+    <script>
+        document.getElementById("preset").addEventListener("change", function () {
+            const selectedValue = this.value;
+    
+            // Configurações predefinidas
+            const presets = {
+                "8mm": {
+                    norma_interna_min: 4,
+                    norma_interna_max: 7,
+                    norma_externa_min: 6,
+                    norma_externa_max: 5,
+                    norma_objetivada_min: 7,
+                    norma_objetivada_max: 3
+                }
+                // Adicione outros padrões aqui, se necessário
+            };
+    
+            // Verifica se existe uma configuração para o valor selecionado
+            if (presets[selectedValue]) {
+                document.getElementById("norma_interna_min").value = presets[selectedValue].norma_interna_min;
+                document.getElementById("norma_interna_max").value = presets[selectedValue].norma_interna_max;
+                document.getElementById("norma_externa_min").value = presets[selectedValue].norma_externa_min;
+                document.getElementById("norma_externa_max").value = presets[selectedValue].norma_externa_max;
+                document.getElementById("norma_objetivada_min").value = presets[selectedValue].norma_objetivada_min;
+                document.getElementById("norma_objetivada_max").value = presets[selectedValue].norma_objetivada_max;
+            }
+        });
+
+    </script>
 </body>
 </html>
