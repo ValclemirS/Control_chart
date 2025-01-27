@@ -178,7 +178,7 @@ function updateChart(horas, massaLinear, nucleo, normaInternaMin, normaInternaMa
                         align: "top",
                         font: {
                             weight: 'bold',
-                            size: 16,
+                            size: 11,
                         },
                         formatter: (value, context) => {
                             if (context.dataset.label === "Massa Atual") {
