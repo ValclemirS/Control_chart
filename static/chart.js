@@ -185,7 +185,7 @@ function updateChart(horas, massaLinear, nucleo, normaInternaMin, normaInternaMa
                                 const index = context.dataIndex;
                                 const massa = value ? value.toFixed(2) : "N/A";
                                 const nucleoValue = nucleo && nucleo[index] !== undefined ? nucleo[index].toFixed(2) : "N/A";
-                                return `ML:${massa}g/mm\nNúc:${nucleoValue}mm`;
+                                return `ML:${massa}Kg/mm\nNúc:${nucleoValue}mm`;
                             }
                             return null;
                         }
