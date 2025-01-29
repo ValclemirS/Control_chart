@@ -1,10 +1,32 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session, flash
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_socketio import SocketIO, emit
 from datetime import datetime
+#import sqlite3
 
 app = Flask(__name__)
-app.secret_key = 'sua_chave_secreta_aqui'  # Chave secreta para sessões
 socketio = SocketIO(app)
+
+# Configuração do banco de dados
+#DATABASE = 'teste.db'
+
+#def get_db_connection():
+   # conn = sqlite3.connect(DATABASE)
+    #conn.row_factory = sqlite3.Row
+    #return conn
+
+#def init_db():
+    #with get_db_connection() as conn:
+        #conn.execute('''
+            #CREATE TABLE IF NOT EXISTS dados (
+               # id INTEGER PRIMARY KEY AUTOINCREMENT,
+              #  data1 TEXT NOT NULL,
+             #   data2 REAL NOT NULL,
+             #   data3 REAL NOT NULL
+          #  )
+      #  ''')
+       # conn.commit()
+
+#init_db() funciona pelo amor de Deus
 
 # Dados de exemplo (inicializados como vazios)
 dados = {
@@ -23,12 +45,6 @@ preferencias = {
     "norma_objetivada_max": None
 }
 
-# Dados de usuários (simulando um banco de dados)
-usuarios = {
-    'admin': {'senha': 'admin123', 'tipo': 'admin'},
-    'operador': {'senha': 'operador123', 'tipo': 'operador'}
-}
-
 def calcular_massa_linear(massa, comprimento):
     return massa / comprimento if comprimento != 0 else 0
 
@@ -36,33 +52,8 @@ def calcular_massa_linear(massa, comprimento):
 def index():
     return redirect(url_for('grafico'))
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username in usuarios and usuarios[username]['senha'] == password:
-            session['username'] = username
-            session['tipo'] = usuarios[username]['tipo']
-            flash('Login realizado com sucesso!', 'success')
-            return redirect(url_for('grafico'))
-        else:
-            flash('Usuário ou senha incorretos!', 'danger')
-    return render_template('login.html')
-
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    session.pop('tipo', None)
-    flash('Logout realizado com sucesso!', 'success')
-    return redirect(url_for('login'))
-
 @app.route('/grafico')
 def grafico():
-    if 'username' not in session:
-        flash('Por favor, faça login para acessar esta página.', 'danger')
-        return redirect(url_for('login'))
-    
     massa_linear = dados["massa_linear"][-1] if dados["massa_linear"] else 0
     nucleo = dados["nucleo"][-1] if dados["nucleo"] else 0
     return render_template("grafico.html",
@@ -75,10 +66,6 @@ def grafico():
 
 @app.route('/input', methods=["GET", "POST"])
 def input():
-    if 'username' not in session:
-        flash('Por favor, faça login para acessar esta página.', 'danger')
-        return redirect(url_for('login'))
-    
     if request.method == "POST":
         try:
             massa = float(request.form.get('massa'))
@@ -92,16 +79,7 @@ def input():
             dados["massa_linear"].append(massa_linear)
             dados["nucleo"].append(nucleo)
 
-            # Emitir atualização para todas as telas conectadas
-            socketio.emit('update_data', {
-                'hora': hora_entrada,
-                'nucleo': nucleo,
-                'massa_linear': massa_linear,
-                'massa_media': sum(dados['massa_linear'])/len(dados['massa_linear']) if dados['massa_linear'] else 0,
-                'massa_maxima': max(dados['massa_linear']) if dados['massa_linear'] else 0,
-                'massa_minima': min(dados['massa_linear']) if dados['massa_linear'] else 0
-            })
-
+            socketio.emit('update_data', {'hora': hora_entrada, 'nucleo': nucleo, 'massa_linear': massa_linear})
             return redirect(url_for('grafico'))
         except ValueError:
             return "Por favor, insira valores válidos para todos os campos numéricos."
@@ -109,10 +87,6 @@ def input():
 
 @app.route('/pref', methods=["GET", "POST"])
 def pref():
-    if 'username' not in session or session['tipo'] != 'admin':
-        flash('Acesso negado. Somente administradores podem acessar esta página.', 'danger')
-        return redirect(url_for('grafico'))
-    
     if request.method == "POST":
         for key in preferencias:
             preferencias[key] = float(request.form[key]) if request.form[key] else None
@@ -127,6 +101,15 @@ def data():
         "nucleo": dados["nucleo"],
         **preferencias
     })
+
+#@app.route('/save_data', methods=["POST"])
+ #def save_data():
+    #data = request.json
+    #with get_db_connection() as conn:
+        #conn.execute('INSERT INTO dados (hora, massa_linear, nucleo) VALUES (?, ?, ?)',
+                   #  (data['hora'], data['massa_linear'], data['nucleo']))
+       # conn.commit()
+    #return jsonify({"status": "success"}) teste para o futuro
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

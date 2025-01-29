@@ -9,7 +9,10 @@
 <body>
     <div class="menu">
         <a href="/grafico">Gráfico</a>
-        <a href="/pref">Parametrização</a>
+        {% if session['tipo'] == 'admin' %}
+            <a href="/pref">Parametrização</a>
+        {% endif %}
+        <a href="/logout">Logout</a>
     </div>
 
     <div class="input-container">
@@ -43,8 +46,7 @@
             const resultado = massa && comprimento ? (massa / comprimento).toFixed(2) : 'N/A';
             document.getElementById('massa_linear_result').textContent = resultado;
         }
-    
-    function validarFormulario() {
+        function validarFormulario() {
         const massa = parseFloat(document.getElementById('massa').value);
         const comprimento = parseFloat(document.getElementById('comprimento').value);
         
@@ -54,8 +56,6 @@
         }
         return true;  // Permite o envio do formulário
     }
-
-
     </script>
 </body>
 </html>

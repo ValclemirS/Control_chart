@@ -15,7 +15,10 @@
     <div class="menu">
         <a href="/grafico">Gráfico</a>
         <a href="/input">Dados de análise</a>
-        <a href="/pref">Parametrização</a>
+        {% if session['tipo'] == 'admin' %}
+            <a href="/pref">Parametrização</a>
+        {% endif %}
+        <a href="/logout">Logout</a>
     </div>
 
     <div class="grafico-container">
@@ -67,56 +70,10 @@
                 <p class="info-value">{{ norma_objetivada_max }} kg/m</p>
             </div>
         </div>
-        <!-- Este é um comentário em HTML 
-        <div class="button-container">
-            <button onclick="exportChart()">Exportar Gráfico</button>
-            <button onclick="takeScreenshot()">Tirar Print</button>
-            <button onclick="saveData()">Salvar Dados</button>
-        </div>
-         --> <!-- funçoes para o futuro -->
     </div>
 
     <footer>
         <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
     </footer>
-
-    <script>
-        function exportChart() {
-            const chartCanvas = document.getElementById('massaLinearChart');
-            const link = document.createElement('a');
-            link.href = chartCanvas.toDataURL('image/png');
-            link.download = 'grafico_massa_linear.png';
-            link.click();
-        }
-
-        function takeScreenshot() {
-            html2canvas(document.querySelector(".grafico-container")).then(canvas => {
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL('image/png');
-                link.download = 'screenshot_grafico.png';
-                link.click();
-            });
-        }
-
-        function saveData() {
-            fetch('/save_data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    hora: new Date().toISOString(),
-                    massa_linear: dados.massa_linear.slice(-1)[0],
-                    nucleo: dados.nucleo.slice(-1)[0]
-                })
-            }).then(response => response.json())
-              .then(data => {
-                  alert('Dados salvos com sucesso!');
-              })
-              .catch(error => {
-                  console.error('Erro ao salvar dados:', error);
-              });
-        }
-    </script>
 </body>
 </html>

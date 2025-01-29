@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preferências - Controle de Massa Linear</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-
 <body>
     <div class="menu">
         <a href="/grafico">Gráfico</a>
         <a href="/input">Dados de análise</a>
+        <a href="/logout">Logout</a>
     </div>
 
-    <!-- Formulário começa aqui -->
     <form action="/pref" method="POST">
         <div class="form-group">
             <label for="preset">Selecione um padrão:</label>
             <select id="preset">
                 <option value="">Selecione</option>
                 <option value="8mm">8 mm</option>
-                <option value="20mm">20 mm</option>8 mm</option>
-                <!-- Você pode adicionar mais opções aqui -->
+                <option value="20mm">20 mm</option>
             </select>
         </div>
 
@@ -64,12 +61,10 @@
 
         <button type="submit" class="submit-btn">Salvar Preferências</button>
     </form>
-    <!-- Formulário termina aqui -->
 
     <footer>
         <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
     </footer>
-
     <script>
         document.getElementById("preset").addEventListener("change", function () {
             const selectedValue = this.value;
@@ -105,8 +100,6 @@
                 document.getElementById("norma_objetivada_max").value = presets[selectedValue].norma_objetivada_max;
             }
         });
-
     </script>
 </body>
-
 </html>
