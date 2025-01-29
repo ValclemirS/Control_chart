@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #b3b3b8;
+    background-color: #ffffff;
     color: #000000;
 }
 
@@ -12,7 +12,7 @@ h2{
     margin: 0 0 10px;
     color: #000000;
 }
- h4 {
+ h5 {
     margin: 0 0 10px;
     color: #ffffff;
 }
@@ -68,15 +68,15 @@ footer .avb {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
 }
 
 .input-container, .preferencias-container, .grafico-container {
     background-color:#ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
+    /*box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);*/
+    padding: 10px;
+    margin-bottom: 1px;
 }
 
 /* Forms */
@@ -113,7 +113,7 @@ button:hover {
 /* Chart Container */
 .grafico-box {
     position: relative;
-    height: 400px;
+    height: 550px;
     width: 100%;
 }
 
@@ -126,9 +126,9 @@ canvas {
 /* Information Cards */
 .informacoes-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 2px;
-    margin-top: 20px;
+    margin-top: 10px; /*jj*/
 }
 
 .informacoes {
@@ -139,7 +139,7 @@ canvas {
 }
 
 .info-value {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     color: #ffffff;
 }
@@ -149,11 +149,10 @@ canvas {
     color: #000000;
 }
 #massaAtual > .info-value{
-    color: #000000;
+    color: #ffffff;
+    font-size: 18px;
 }
-#massaAtual > h3{
-    color: #000000;
-}
+
 
 /* Responsive Design */
 @media (min-width: 768px) {
@@ -168,11 +167,11 @@ canvas {
     }
 
     .grafico-box {
-        height: 670px;
+        height: 700px;
     }
     .informacoes-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
         gap: 2px;
         margin-top: 20px;
     }

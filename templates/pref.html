@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preferências - Controle de Massa Linear</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
+
 <body>
     <div class="menu">
         <a href="/grafico">Gráfico</a>
@@ -23,49 +25,55 @@
                 <!-- Você pode adicionar mais opções aqui -->
             </select>
         </div>
-        
+
         <div class="form-group">
             <label for="norma_interna_min">Norma Interna (Mínima):</label>
-            <input type="number" step="any" name="norma_interna_min" id="norma_interna_min" value="{{ norma_interna_min }}" required>
+            <input type="number" step="any" name="norma_interna_min" id="norma_interna_min"
+                value="{{ norma_interna_min }}" required>
         </div>
-        
+
         <div class="form-group">
             <label for="norma_interna_max">Norma Interna (Máxima):</label>
-            <input type="number" step="any" name="norma_interna_max" id="norma_interna_max" value="{{ norma_interna_max }}" required>
+            <input type="number" step="any" name="norma_interna_max" id="norma_interna_max"
+                value="{{ norma_interna_max }}" required>
         </div>
-        
+
         <div class="form-group">
             <label for="norma_externa_min">Norma Externa (Mínima):</label>
-            <input type="number" step="any" name="norma_externa_min" id="norma_externa_min" value="{{ norma_externa_min }}" required>
+            <input type="number" step="any" name="norma_externa_min" id="norma_externa_min"
+                value="{{ norma_externa_min }}" required>
         </div>
-        
+
         <div class="form-group">
             <label for="norma_externa_max">Norma Externa (Máxima):</label>
-            <input type="number" step="any" name="norma_externa_max" id="norma_externa_max" value="{{ norma_externa_max }}" required>
+            <input type="number" step="any" name="norma_externa_max" id="norma_externa_max"
+                value="{{ norma_externa_max }}" required>
         </div>
-        
+
         <div class="form-group">
             <label for="norma_objetivada_min">Norma Objetivada (Mínima):</label>
-            <input type="number" step="any" name="norma_objetivada_min" id="norma_objetivada_min" value="{{ norma_objetivada_min }}" required>
+            <input type="number" step="any" name="norma_objetivada_min" id="norma_objetivada_min"
+                value="{{ norma_objetivada_min }}" required>
         </div>
-        
+
         <div class="form-group">
             <label for="norma_objetivada_max">Norma Objetivada (Máxima):</label>
-            <input type="number" step="any" name="norma_objetivada_max" id="norma_objetivada_max" value="{{ norma_objetivada_max }}" required>
+            <input type="number" step="any" name="norma_objetivada_max" id="norma_objetivada_max"
+                value="{{ norma_objetivada_max }}" required>
         </div>
-        
-        <button type="submit" class="submit-btn">Salvar Preferências</button>  
+
+        <button type="submit" class="submit-btn">Salvar Preferências</button>
     </form>
     <!-- Formulário termina aqui -->
 
     <footer>
         <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
     </footer>
-    
+
     <script>
         document.getElementById("preset").addEventListener("change", function () {
             const selectedValue = this.value;
-    
+
             // Configurações predefinidas
             const presets = {
                 "8mm": {
@@ -81,12 +89,12 @@
                     norma_interna_max: 2.417,
                     norma_externa_min: 2.343,
                     norma_externa_max: 2.589,
-                    norma_objetivada_min:2.367,
+                    norma_objetivada_min: 2.367,
                     norma_objetivada_max: 2.417
                 }
                 // Adicione outros padrões aqui, se necessário
             };
-    
+
             // Verifica se existe uma configuração para o valor selecionado
             if (presets[selectedValue]) {
                 document.getElementById("norma_interna_min").value = presets[selectedValue].norma_interna_min;
@@ -100,4 +108,5 @@
 
     </script>
 </body>
+
 </html>

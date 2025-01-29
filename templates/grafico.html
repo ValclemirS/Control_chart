@@ -1,81 +1,122 @@
-   <!DOCTYPE html>
-    <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Gráfico - Controle de Massa Linear</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-        <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> <!-- Adicione esta linha -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="{{ url_for('static', filename='chart.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    </head>
-    <body>
-        <div class="menu">
-            <a href="/grafico">Gráfico</a>
-            <a href="/input">Dados de análise</a>
-            <a href="/pref">Parametrização</a>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico - Controle de Massa Linear</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='chart.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="menu">
+        <a href="/grafico">Gráfico</a>
+        <a href="/input">Dados de análise</a>
+        <a href="/pref">Parametrização</a>
+    </div>
+
+    <div class="grafico-container">
+        <h1>Inspeção online via leito - Massa linear- AVB CA50 vergalhão 20mm</h1>
+
+        <div class="grafico-box">
+            <canvas id="massaLinearChart"></canvas>
         </div>
-    
-        <div class="grafico-container">
-            <h1 >Inspeção online via leito - Massa linear- AVB CA50 vergalhão 20mm</h1>
-    
-            <div class="grafico-box">
-                <canvas id="massaLinearChart"></canvas>
+        <div class="informacoes-container">
+            <div class="informacoes" id="massaAtual">
+                <h5> Massa Linear atual</h5>
+                <p class="info-value">{{ massa_linear }} kg/m</p>
             </div>
-    
-            <div class="informacoes-container">
-                <div class="informacoes" id="massaAtual">
-                    <h4> Massa Linear atual</h4>
-                    <p class="info-value">{{ massa_linear }} kg/m</p>
-                </div>
-                
-                <div class="informacoes">
-                    <h4>Média de Massa Linear</h4>
-                    <p class="info-value">{{ massa_media }} kg/m</p>
-                </div>
-                <div class="informacoes">
-                    <h4>Massa Linear Máxima</h4>
-                    <p class="info-value">{{ massa_maxima }} kg/m</p>
-                </div>
-                <div class="informacoes">
-                    <h4>Massa Linear Mínima</h4>
-                    <p class="info-value">{{ massa_minima }} kg/m</p>
-                </div>
-                <div class="informacoes">
-                    <h4>AVB (Mínima)</h4>
-                    <p class="info-value">{{ norma_interna_min }} kg/m</p>
-                </div>
-                <div class="informacoes">
-                    <h4>AVB (Máxima)</h4>
-                    <p class="info-value">{{ norma_interna_max }} kg/m</p>
-                </div>
-                <div class="informacoes">
-                    <h4>ABNT (Mínima)</h4>
-                    <p class="info-value">{{ norma_externa_min }} kg/m</p>
-                </div>
-                <div class="informacoes">
-                    <h4>ABNT (Máxima)</h4>
-                    <p class="info-value">{{ norma_externa_max }} kg/m</p>
-                </div>
-                <div class="informacoes">
-                    <h4>Objetivada (Mínima)</h4>
-                    <p class="info-value">{{ norma_objetivada_min }} kg/m</p>
-                </div>
-                <div class="informacoes">
-                    <h4>Objetivada (Máxima)</h4>
-                    <p class="info-value">{{ norma_objetivada_max }} kg/m</p>
-                </div>
+            
+            <div class="informacoes">
+                <h5>Média</h5>
+                <p class="info-value">{{ massa_media }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h5>Massa Linear Máxima</h5>
+                <p class="info-value">{{ massa_maxima }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h5>Massa Linear Mínima</h5>
+                <p class="info-value">{{ massa_minima }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h5>AVB (Mínima)</h5>
+                <p class="info-value">{{ norma_interna_min }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h5>AVB (Máxima)</h5>
+                <p class="info-value">{{ norma_interna_max }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h5>ABNT (Mínima)</h5>
+                <p class="info-value">{{ norma_externa_min }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h5>ABNT (Máxima)</h5>
+                <p class="info-value">{{ norma_externa_max }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h5>Objetivada (Mínima)</h5>
+                <p class="info-value">{{ norma_objetivada_min }} kg/m</p>
+            </div>
+            <div class="informacoes">
+                <h5>Objetivada (Máxima)</h5>
+                <p class="info-value">{{ norma_objetivada_max }} kg/m</p>
             </div>
         </div>
-    
-        <footer>
-            <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
-        </footer>
-        <script>
-             
-        </script>      
-        
-    </body>
-    </html>
-   
+        <!-- Este é um comentário em HTML 
+        <div class="button-container">
+            <button onclick="exportChart()">Exportar Gráfico</button>
+            <button onclick="takeScreenshot()">Tirar Print</button>
+            <button onclick="saveData()">Salvar Dados</button>
+        </div>
+         --> <!-- funçoes para o futuro -->
+    </div>
+
+    <footer>
+        <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
+    </footer>
+
+    <script>
+        function exportChart() {
+            const chartCanvas = document.getElementById('massaLinearChart');
+            const link = document.createElement('a');
+            link.href = chartCanvas.toDataURL('image/png');
+            link.download = 'grafico_massa_linear.png';
+            link.click();
+        }
+
+        function takeScreenshot() {
+            html2canvas(document.querySelector(".grafico-container")).then(canvas => {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'screenshot_grafico.png';
+                link.click();
+            });
+        }
+
+        function saveData() {
+            fetch('/save_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    hora: new Date().toISOString(),
+                    massa_linear: dados.massa_linear.slice(-1)[0],
+                    nucleo: dados.nucleo.slice(-1)[0]
+                })
+            }).then(response => response.json())
+              .then(data => {
+                  alert('Dados salvos com sucesso!');
+              })
+              .catch(error => {
+                  console.error('Erro ao salvar dados:', error);
+              });
+        }
+    </script>
+</body>
+</html>
