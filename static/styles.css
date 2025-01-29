@@ -20,11 +20,23 @@ h2{
 p {
     margin: 0 0 10px;
 }
+.logo-container {
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    z-index: 1000; /* Garante que a logo fique acima de outros elementos */
+}
+
+.logo {
+    height: 80px; /* Ajuste o tamanho da logo conforme necessário */
+    width: auto; /* Mantém a proporção da imagem */
+}
+
 
 /* Menu Navigation */
 .menu {
     background-color: #84A492;
-    /*padding: 15px;*/
+    padding: 14px;
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -37,6 +49,7 @@ p {
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    margin-left: 70px;
 }
 
 .menu a:hover {

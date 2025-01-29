@@ -6,7 +6,19 @@
     <title>Login - Controle de Massa Linear</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset de estilo para uma base consistente */
+                        .logo-container {
+                position: absolute;
+                top: 0px;
+                left: 50%;
+                z-index: 1000; /* Garante que a logo fique acima de outros elementos */
+            }
+
+            .logo {
+                height: 80px; /* Ajuste o tamanho da logo conforme necessário */
+                width: auto; /* Mantém a proporção da imagem */
+            }
+
+
         * {
             margin: 0;
             padding: 0;
@@ -122,6 +134,9 @@
 </head>
 <body>
     <div class="login-container">
+        <div class="logo-container_login">
+            <img src="{{ url_for('static', filename='avb.jpg') }}" alt="AVB Logo" class="logo">
+        </div>
         <h1>Login</h1>
         <form method="POST">
             <div class="form-group">

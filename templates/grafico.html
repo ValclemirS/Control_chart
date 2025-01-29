@@ -12,13 +12,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='avb.jpg') }}" alt="AVB Logo" class="logo">
+    </div>
+
     <div class="menu">
         <a href="/grafico">Gráfico</a>
         <a href="/input">Dados de análise</a>
         {% if session['tipo'] == 'admin' %}
             <a href="/pref">Parametrização</a>
         {% endif %}
-        <a href="/logout">Logout</a>
+        <a href="/logout">Sair</a>
     </div>
 
     <div class="grafico-container">
