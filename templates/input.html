@@ -31,6 +31,21 @@
 
             <p>Massa Linear (kg/m): <strong id="massa_linear_result">N/A</strong></p>
 
+            <!-- Mensagem de alerta para o supervisor -->
+            <div id="mensagem_supervisor" style="display: none; color: red; font-weight: bold;">
+                Comunicar ao supervisor do turno: A massa linear está próxima dos limites da norma interna.
+            </div>
+
+            <!-- Mensagem de alerta para massa fora da ABNT -->
+            <div id="mensagem_fora_abnt" style="display: none; color: red; font-weight: bold;">
+                Massa linear fora da ABNT. Favor pegar uma nova amostra e comunicar ao supervisor do laminador. 
+            </div>
+
+            <!-- Mensagem de alerta para massa dentro da ABNT -->
+            <div id="mensagem_dentro_abnt" style="display: none; color: green; font-weight: bold;">
+                Massa linear dentro da ABNT.
+            </div>
+
             <button type="submit" class="submit-btn">Enviar</button>
         </form>
     </div>
@@ -40,13 +55,48 @@
     </footer>
 
     <script>
-        function calcularMassaLinear() {
-            const massa = parseFloat(document.getElementById('massa').value);
-            const comprimento = parseFloat(document.getElementById('comprimento').value);
-            const resultado = massa && comprimento ? (massa / comprimento).toFixed(2) : 'N/A';
-            document.getElementById('massa_linear_result').textContent = resultado;
+    function calcularMassaLinear() {
+        const massa = parseFloat(document.getElementById('massa').value);
+        const comprimento = parseFloat(document.getElementById('comprimento').value);
+        const resultado = massa && comprimento ? (massa / comprimento).toFixed(3) : 'N/A';
+        document.getElementById('massa_linear_result').textContent = resultado;
+
+        // Verificar se a massa linear está próxima dos limites (5% antes de atingir o máximo ou mínimo)
+        const norma_interna_min = parseFloat("{{ preferencias.norma_interna_min | default(0) }}");
+        const norma_interna_max = parseFloat("{{ preferencias.norma_interna_max | default(0) }}");
+        const norma_externa_min = parseFloat("{{ preferencias.norma_externa_min | default(0) }}");
+        const norma_externa_max = parseFloat("{{ preferencias.norma_externa_max| default(0) }}");
+        const massa_linear = parseFloat(resultado);
+
+        const mensagemSupervisor = document.getElementById('mensagem_supervisor');
+        const mensagemForaAbnt = document.getElementById('mensagem_fora_abnt');
+        const mensagemDentroAbnt = document.getElementById('mensagem_dentro_abnt');
+
+        // Limpar todas as mensagens antes de verificar
+        mensagemSupervisor.style.display = 'none';
+        mensagemForaAbnt.style.display = 'none';
+        mensagemDentroAbnt.style.display = 'none';
+
+        if (massa_linear && !isNaN(norma_interna_min) && !isNaN(norma_interna_max)) {
+            const limite_min = norma_interna_min * 1.05; // 5% acima do mínimo
+            const limite_max = norma_interna_max * 0.95; // 5% abaixo do máximo
+            const limite_min_abnt=norma_externa_min;
+            const limite_max_abnt=norma_externa_max;
+
+            if (massa_linear > norma_externa_max || massa_linear < norma_externa_min) {
+                // Fora da ABNT
+                mensagemForaAbnt.style.display = 'block';
+            } else if (massa_linear >= limite_max || massa_linear <= limite_min) {
+                // Próximo dos limites (5% do mínimo ou máximo)
+                mensagemSupervisor.style.display = 'block';
+            } else {
+                // Dentro da ABNT
+                mensagemDentroAbnt.style.display = 'block';
+            }
         }
-        function validarFormulario() {
+    }
+
+    function validarFormulario() {
         const massa = parseFloat(document.getElementById('massa').value);
         const comprimento = parseFloat(document.getElementById('comprimento').value);
         
@@ -56,6 +106,6 @@
         }
         return true;  // Permite o envio do formulário
     }
-    </script>
+</script>
 </body>
 </html>

@@ -105,7 +105,9 @@ def input():
             return redirect(url_for('grafico'))
         except ValueError:
             return "Por favor, insira valores válidos para todos os campos numéricos."
-    return render_template("input.html")
+    
+    # Passa o dicionário 'preferencias' para o template
+    return render_template("input.html", preferencias=preferencias)
 
 @app.route('/pref', methods=["GET", "POST"])
 def pref():
