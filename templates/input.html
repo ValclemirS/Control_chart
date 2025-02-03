@@ -19,10 +19,10 @@
         <h1>Inserir Dados de Massa Linear</h1>
         <form method="POST">
             <label for="massa">Massa (kg):</label>
-            <input type="number" step="any" name="massa" id="massa" required>
+            <input type="number" step="any" name="massa" id="massa" required max="2000">
 
             <label for="comprimento">Comprimento (m):</label>
-            <input type="number" step="any" name="comprimento" id="comprimento" required>
+            <input type="number" step="any" name="comprimento" id="comprimento" required max="600">
             
             <label for="nucleo">Núcleo (mm):</label>
             <input type="number" step="any" name="nucleo" id="nucleo" required>
@@ -32,13 +32,18 @@
             <p>Massa Linear (kg/m): <strong id="massa_linear_result">N/A</strong></p>
 
             <!-- Mensagem de alerta para o supervisor -->
-            <div id="mensagem_supervisor" style="display: none; color: red; font-weight: bold;">
+            <div id="mensagem_supervisor" style="display: none; color: rgb(212, 200, 30); font-weight: bold;">
                 Comunicar ao supervisor do turno: A massa linear está próxima dos limites da norma interna.
             </div>
 
             <!-- Mensagem de alerta para massa fora da ABNT -->
             <div id="mensagem_fora_abnt" style="display: none; color: red; font-weight: bold;">
                 Massa linear fora da ABNT. Favor pegar uma nova amostra e comunicar ao supervisor do laminador. 
+            </div>
+
+            <!-- Mensagem de alerta para massa fora da interna -->
+            <div id="mensagem_fora_int" style="display: none; color: rgb(255, 145, 0); font-weight: bold;">
+                Massa linear fora da Norma interna. Favor pegar uma nova amostra e comunicar ao supervisor do laminador. 
             </div>
 
             <!-- Mensagem de alerta para massa dentro da ABNT -->
@@ -61,7 +66,7 @@
         const resultado = massa && comprimento ? (massa / comprimento).toFixed(3) : 'N/A';
         document.getElementById('massa_linear_result').textContent = resultado;
 
-        // Verificar se a massa linear está próxima dos limites (5% antes de atingir o máximo ou mínimo)
+        // Chamando dados do backend
         const norma_interna_min = parseFloat("{{ preferencias.norma_interna_min | default(0) }}");
         const norma_interna_max = parseFloat("{{ preferencias.norma_interna_max | default(0) }}");
         const norma_externa_min = parseFloat("{{ preferencias.norma_externa_min | default(0) }}");
@@ -70,26 +75,36 @@
 
         const mensagemSupervisor = document.getElementById('mensagem_supervisor');
         const mensagemForaAbnt = document.getElementById('mensagem_fora_abnt');
+        const mensagemforaint = document.getElementById('mensagem_fora_int');
         const mensagemDentroAbnt = document.getElementById('mensagem_dentro_abnt');
 
         // Limpar todas as mensagens antes de verificar
         mensagemSupervisor.style.display = 'none';
         mensagemForaAbnt.style.display = 'none';
         mensagemDentroAbnt.style.display = 'none';
+        mensagemforaint.style.display= 'none';
 
         if (massa_linear && !isNaN(norma_interna_min) && !isNaN(norma_interna_max)) {
-            const limite_min = norma_interna_min * 1.05; // 5% acima do mínimo
-            const limite_max = norma_interna_max * 0.95; // 5% abaixo do máximo
-            const limite_min_abnt=norma_externa_min;
-            const limite_max_abnt=norma_externa_max;
+            const limite_min = norma_interna_min + 0.005; // 5% acima do mínimo
+            const limite_max = norma_interna_max - 0.005; // 5% abaixo do máximo
+            //const limite_min_abnt=norma_externa_min;
+            //const limite_max_abnt=norma_externa_max;
+            //const limite_min_avb = norma_interna_min; 
+            //const limite_max_avb = norma_interna_max ;
 
+            //Definir a mensagem pro usuario
             if (massa_linear > norma_externa_max || massa_linear < norma_externa_min) {
                 // Fora da ABNT
                 mensagemForaAbnt.style.display = 'block';
-            } else if (massa_linear >= limite_max || massa_linear <= limite_min) {
-                // Próximo dos limites (5% do mínimo ou máximo)
+            } else if ((massa_linear > norma_interna_max &&  massa_linear <= norma_externa_max)|| (massa_linear >= norma_externa_min &&  massa_linear < norma_interna_min)) {
+                // Fora da interna mas dentro da ABNT
+                mensagemforaint.style.display = 'block';
+            }
+            else if (massa_linear >= norma_interna_min &&  massa_linear <= limite_min || massa_linear <= norma_interna_max &&  massa_linear >= limite_max ) {
+                // Próximo dos limite da interna (0.005 do mínimo ou máximo)
                 mensagemSupervisor.style.display = 'block';
-            } else {
+            } 
+             else {
                 // Dentro da ABNT
                 mensagemDentroAbnt.style.display = 'block';
             }

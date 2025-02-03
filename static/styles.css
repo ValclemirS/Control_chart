@@ -8,11 +8,12 @@ body {
     color: #000000;
 }
 
-h2{
+h2 {
     margin: 0 0 10px;
     color: #000000;
 }
- h5 {
+
+h5 {
     margin: 0 0 10px;
     color: #ffffff;
 }
@@ -20,6 +21,7 @@ h2{
 p {
     margin: 0 0 10px;
 }
+
 .logo-container {
     position: absolute;
     top: -10px;
@@ -32,7 +34,6 @@ p {
     width: auto; /* Mantém a proporção da imagem */
 }
 
-
 /* Menu Navigation */
 .menu {
     background-color: #84A492;
@@ -40,6 +41,7 @@ p {
     display: flex;
     justify-content: center;
     gap: 15px;
+    flex-wrap: wrap; /* Permite que os itens do menu quebrem para a próxima linha em telas pequenas */
 }
 
 .menu a {
@@ -49,16 +51,16 @@ p {
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    margin-left: 70px;
+    margin-left: 10px; /* Reduzido para telas menores */
 }
 
 .menu a:hover {
-    background-color:#84A492;
+    background-color: #84A492;
 }
 
 /* Footer */
 footer {
-    background-color:#84A492;
+    background-color: #84A492;
     color: #fff;
     text-align: center;
     padding: 10px 0;
@@ -85,9 +87,8 @@ footer .avb {
 }
 
 .input-container, .preferencias-container, .grafico-container {
-    background-color:#ffffff;
+    background-color: #ffffff;
     border-radius: 8px;
-    /*box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);*/
     padding: 10px;
     margin-bottom: 1px;
 }
@@ -112,7 +113,7 @@ input, button {
 }
 
 button {
-    background-color:#84A492;
+    background-color: #84A492;
     color: #fff;
     font-weight: bold;
     cursor: pointer;
@@ -120,14 +121,15 @@ button {
 }
 
 button:hover {
-    background-color:#84A492;
+    background-color: #84A492;
 }
 
 /* Chart Container */
 .grafico-box {
     position: relative;
-    height: 550px;
     width: 100%;
+    height: 75vh; /* Altura relativa à altura da viewport */
+    min-height: 300px; /* Altura mínima para evitar que fique muito pequeno */
 }
 
 canvas {
@@ -141,11 +143,11 @@ canvas {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 2px;
-    margin-top: 10px; /*jj*/
+    margin-top: 10px;
 }
 
 .informacoes {
-    background-color:#84A492;
+    background-color: #84A492;
     padding: 5px;
     border-radius: 8px;
     text-align: center;
@@ -158,38 +160,87 @@ canvas {
 }
 
 #massaAtual {
-    background-color: rgb(216, 193, 89);
+    background-color: rgb(209, 198, 95);
     color: #000000;
 }
-#massaAtual > .info-value{
+
+#massaAtual > .info-value {
     color: #ffffff;
     font-size: 18px;
 }
 
-
 /* Responsive Design */
-@media (min-width: 768px) {
-    .menu {
-        justify-content: space-around;
+@media (max-width: 1366px) {
+    .grafico-box {
+        height: 60vh; /* Reduz a altura em telas menores */
     }
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 768px) {
+    .menu {
+        justify-content: flex-start;
+        padding: 10px;
+    }
+
+    .menu a {
+        margin-left: 5px;
+        padding: 8px 15px;
+    }
+
     .container {
-        padding: 40px;
+        padding: 10px;
     }
 
     .grafico-box {
-        height: 700px;
+        height: 40vh; /* Altura ainda menor para dispositivos móveis */
     }
+
     .informacoes-container {
-        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-        gap: 2px;
-        margin-top: 20px;
     }
 
     footer {
-        font-size: 18px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu a {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .logo-container {
+        position: static;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .logo {
+        height: 60px;
+    }
+
+    .grafico-box {
+        height: 35vh; /* Altura menor para telas muito pequenas */
+    }
+
+    .informacoes-container {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    }
+
+    footer {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .grafico-box {
+        height: 75vh; /* Altura maior para telas grandes */
     }
 }
