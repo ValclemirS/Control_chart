@@ -56,71 +56,70 @@
     </div>
 
     <footer>
-        <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
+        <p>Controle de Massa Linear - devClemir | <span class="foot">Acidente Zero</span></p>
     </footer>
-
-    <script>
+<script>
     function calcularMassaLinear() {
-        const massa = parseFloat(document.getElementById('massa').value);
-        const comprimento = parseFloat(document.getElementById('comprimento').value);
-        const resultado = massa && comprimento ? (massa / comprimento).toFixed(3) : 'N/A';
-        document.getElementById('massa_linear_result').textContent = resultado;
+    const massa = parseFloat(document.getElementById('massa').value);
+    const comprimento = parseFloat(document.getElementById('comprimento').value);
+    const resultado = massa && comprimento ? (massa / comprimento).toFixed(3) : 'N/A';
+    document.getElementById('massa_linear_result').textContent = resultado;
 
-        // Chamando dados do backend
-        const norma_interna_min = parseFloat("{{ preferencias.norma_interna_min | default(0) }}");
-        const norma_interna_max = parseFloat("{{ preferencias.norma_interna_max | default(0) }}");
-        const norma_externa_min = parseFloat("{{ preferencias.norma_externa_min | default(0) }}");
-        const norma_externa_max = parseFloat("{{ preferencias.norma_externa_max| default(0) }}");
-        const massa_linear = parseFloat(resultado);
+    // Chamando dados do backend
+    const norma_interna_min = parseFloat("{{ preferencias.norma_interna_min | default(0) }}");
+    const norma_interna_max = parseFloat("{{ preferencias.norma_interna_max | default(0) }}");
+    const norma_externa_min = parseFloat("{{ preferencias.norma_externa_min | default(0) }}");
+    const norma_externa_max = parseFloat("{{ preferencias.norma_externa_max| default(0) }}");
+    const massa_linear = parseFloat(resultado);
 
-        const mensagemSupervisor = document.getElementById('mensagem_supervisor');
-        const mensagemForaAbnt = document.getElementById('mensagem_fora_abnt');
-        const mensagemforaint = document.getElementById('mensagem_fora_int');
-        const mensagemDentroAbnt = document.getElementById('mensagem_dentro_abnt');
+    const mensagemSupervisor = document.getElementById('mensagem_supervisor');
+    const mensagemForaAbnt = document.getElementById('mensagem_fora_abnt');
+    const mensagemforaint = document.getElementById('mensagem_fora_int');
+    const mensagemDentroAbnt = document.getElementById('mensagem_dentro_abnt');
 
-        // Limpar todas as mensagens antes de verificar
-        mensagemSupervisor.style.display = 'none';
-        mensagemForaAbnt.style.display = 'none';
-        mensagemDentroAbnt.style.display = 'none';
-        mensagemforaint.style.display= 'none';
+    // Limpar todas as mensagens antes de verificar
+    mensagemSupervisor.style.display = 'none';
+    mensagemForaAbnt.style.display = 'none';
+    mensagemDentroAbnt.style.display = 'none';
+    mensagemforaint.style.display= 'none';
 
-        if (massa_linear && !isNaN(norma_interna_min) && !isNaN(norma_interna_max)) {
-            const limite_min = norma_interna_min + 0.005; // 5% acima do mínimo
-            const limite_max = norma_interna_max - 0.005; // 5% abaixo do máximo
-            //const limite_min_abnt=norma_externa_min;
-            //const limite_max_abnt=norma_externa_max;
-            //const limite_min_avb = norma_interna_min; 
-            //const limite_max_avb = norma_interna_max ;
+    if (massa_linear && !isNaN(norma_interna_min) && !isNaN(norma_interna_max)) {
+        const limite_min = norma_interna_min + 0.005; // 5% acima do mínimo
+        const limite_max = norma_interna_max - 0.005; // 5% abaixo do máximo
+        //const limite_min_abnt=norma_externa_min;
+        //const limite_max_abnt=norma_externa_max;
+        //const limite_min_avb = norma_interna_min; 
+        //const limite_max_avb = norma_interna_max ;
 
-            //Definir a mensagem pro usuario
-            if (massa_linear > norma_externa_max || massa_linear < norma_externa_min) {
-                // Fora da ABNT
-                mensagemForaAbnt.style.display = 'block';
-            } else if ((massa_linear > norma_interna_max &&  massa_linear <= norma_externa_max)|| (massa_linear >= norma_externa_min &&  massa_linear < norma_interna_min)) {
-                // Fora da interna mas dentro da ABNT
-                mensagemforaint.style.display = 'block';
-            }
-            else if (massa_linear >= norma_interna_min &&  massa_linear <= limite_min || massa_linear <= norma_interna_max &&  massa_linear >= limite_max ) {
-                // Próximo dos limite da interna (0.005 do mínimo ou máximo)
-                mensagemSupervisor.style.display = 'block';
-            } 
-             else {
-                // Dentro da ABNT
-                mensagemDentroAbnt.style.display = 'block';
-            }
+        //Definir a mensagem pro usuario
+        if (massa_linear > norma_externa_max || massa_linear < norma_externa_min) {
+            // Fora da ABNT
+            mensagemForaAbnt.style.display = 'block';
+        } else if ((massa_linear > norma_interna_max &&  massa_linear <= norma_externa_max)|| (massa_linear >= norma_externa_min &&  massa_linear < norma_interna_min)) {
+            // Fora da interna mas dentro da ABNT
+            mensagemforaint.style.display = 'block';
+        }
+        else if (massa_linear >= norma_interna_min &&  massa_linear <= limite_min || massa_linear <= norma_interna_max &&  massa_linear >= limite_max ) {
+            // Próximo dos limite da interna (0.005 do mínimo ou máximo)
+            mensagemSupervisor.style.display = 'block';
+        } 
+         else {
+            // Dentro da ABNT
+            mensagemDentroAbnt.style.display = 'block';
         }
     }
+}
 
-    function validarFormulario() {
-        const massa = parseFloat(document.getElementById('massa').value);
-        const comprimento = parseFloat(document.getElementById('comprimento').value);
-        
-        if ((isNaN(massa) || massa <= 0 ) && (isNaN(comprimento) || comprimento <= 0 )) {
-            alert("Por favor, insira valores válidos para massa e comprimento (maiores que zero).");
-            return false;  // Impede o envio do formulário
-        }
-        return true;  // Permite o envio do formulário
+function validarFormulario() {
+    const massa = parseFloat(document.getElementById('massa').value);
+    const comprimento = parseFloat(document.getElementById('comprimento').value);
+    
+    if ((isNaN(massa) || massa <= 0 ) && (isNaN(comprimento) || comprimento <= 0 )) {
+        alert("Por favor, insira valores válidos para massa e comprimento (maiores que zero).");
+        return false;  // Impede o envio do formulário
     }
+    return true;  // Permite o envio do formulário
+}
 </script>
 </body>
 </html>

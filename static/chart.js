@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const socket = io();
     let chart;
     let isUpdatingChart = false;
-
     function fetchData() {
         if (isUpdatingChart) return;
 
@@ -80,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             tension: 0.4,
                         },
                         {
-                            label: "AVB (Mínima)",
+                            label: "interna (Mínima)",
                             data: horas.map(() => normaInternaMin),
                             borderColor: "green",
                             backgroundColor: "green",
@@ -90,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             tension: 0.4,
                         },
                         {
-                            label: "AVB (Máxima)",
+                            label: "interna (Máxima)",
                             data: horas.map(() => normaInternaMax),
                             borderColor: "green",
                             backgroundColor: "green",

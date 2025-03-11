@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="logo-container">
-        <img src="{{ url_for('static', filename='avb.jpg') }}" alt="AVB Logo" class="logo">
+        <img src="{{ url_for('static', filename='avb.jpg') }}" alt="Logo" class="logo">
     </div>
 
     <div class="menu">
@@ -26,7 +26,7 @@
     </div>
 
     <div class="grafico-container">
-        <h1>Inspeção online via leito - Massa linear- AVB CA50 vergalhão 20mm</h1>
+        <h1>Inspeção online via leito - Massa linear- CA50 vergalhão 20mm</h1>
 
         <div class="grafico-box">
             <canvas id="massaLinearChart"></canvas>
@@ -50,11 +50,11 @@
                 <p class="info-value">{{ massa_minima }} kg/m</p>
             </div>
             <div class="informacoes">
-                <h5>AVB (Mínima)</h5>
+                <h5>interna (Mínima)</h5>
                 <p class="info-value">{{ norma_interna_min }} kg/m</p>
             </div>
             <div class="informacoes">
-                <h5>AVB (Máxima)</h5>
+                <h5>interna (Máxima)</h5>
                 <p class="info-value">{{ norma_interna_max }} kg/m</p>
             </div>
             <div class="informacoes">
@@ -77,7 +77,7 @@
     </div>
 
     <footer>
-        <p>Controle de Massa Linear - devClemir | <span class="avb">AVB - Acidente Zero</span></p>
+        <p>Controle de Massa Linear - devClemir | <span class="avb">Acidente Zero</span></p>
     </footer>
 </body>
 </html>

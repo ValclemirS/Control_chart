@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Controle de Massa Linear</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-                        .logo-container {
-                position: absolute;
-                top: 0px;
-                left: 50%;
-                z-index: 1000; /* Garante que a logo fique acima de outros elementos */
-            }
+        .logo-container {
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            z-index: 1000;
+        }
 
-            .logo {
-                height: 80px; /* Ajuste o tamanho da logo conforme necessário */
-                width: auto; /* Mantém a proporção da imagem */
-            }
+        .logo {
+            height: 80px;
+           
+            width: auto;
+            
+        }
 
 
         * {
@@ -132,10 +135,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <div class="logo-container_login">
-            <img src="{{ url_for('static', filename='avb.jpg') }}" alt="AVB Logo" class="logo">
+            <img src="{{ url_for('static', filename='avb.jpg') }}" alt="Logo" class="logo">
         </div>
         <h1>Login</h1>
         <form method="POST">
@@ -152,12 +156,13 @@
             <button type="submit" class="submit-btn">Entrar</button>
         </form>
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
     </div>
 </body>
+
 </html>
